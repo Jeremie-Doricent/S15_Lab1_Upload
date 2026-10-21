@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZombieParty.Models;
 using ZombieParty.Models.Data;
+using ZombieParty.Utility;
 using ZombieParty.ViewModels;
+using ZombieParty.Utility;
 
 namespace ZombieParty.Controllers
 {
@@ -57,7 +59,7 @@ namespace ZombieParty.Controllers
                 // Ajouter à la BD
                await  _baseDonnees.ZombieTypes.AddAsync(zombieType);
                 _baseDonnees.SaveChanges();
-                TempData["Success"] = $"{zombieType.TypeName} zombie type added";
+                TempData[AppConstants.Success] = $"{zombieType.TypeName} zombie type added";
                 return this.RedirectToAction("Index");
             }
 

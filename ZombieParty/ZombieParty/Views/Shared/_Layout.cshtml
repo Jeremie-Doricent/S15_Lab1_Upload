@@ -9,6 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ZombieParty.styles.css" asp-append-version="true" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" />
 </head>
 <body>
     <header>
@@ -60,10 +63,7 @@
         </nav>
     </header>
     <div class="container">
-        @if (!string.IsNullOrWhiteSpace(TempData["Success"] as string))
-        {
-            <div class="alert alert-success">@TempData["Success"]</div>
-        }
+        <partial name="_Notifications" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -79,5 +79,34 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    
+    <script>
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                positionClass: "toast-top-right",
+                timeOut: 5000
+            };
+
+            @if (!string.IsNullOrWhiteSpace(TempData["Success"] as string))
+                {
+                    <text>toastr.success(@Json.Serialize(TempData["Success"]));</text>
+            }
+                @if (!string.IsNullOrWhiteSpace(TempData["Error"] as string))
+                {
+                    <text>toastr.error(@Json.Serialize(TempData["Error"]));</text>
+            }
+                @if (!string.IsNullOrWhiteSpace(TempData["Warning"] as string))
+                {
+                    <text>toastr.warning(@Json.Serialize(TempData["Warning"]));</text>
+            }
+                @if (!string.IsNullOrWhiteSpace(TempData["Info"] as string))
+                {
+                    <text>toastr.info(@Json.Serialize(TempData["Info"]));</text>
+
+            }
+               
+    </script>
 </body>
 </html>
